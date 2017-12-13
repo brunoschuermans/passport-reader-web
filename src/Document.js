@@ -8,6 +8,7 @@ import IconButton from "material-ui/IconButton";
 import resizeImage from "resize-image";
 import {DatePicker, Divider, RaisedButton, TextField} from "material-ui";
 import {ActionDeleteForever, EditorAttachFile, ImageAddAPhoto} from "material-ui/svg-icons/index";
+import moment from "moment";
 
 const imageInput = {
     cursor: 'pointer',
@@ -204,6 +205,15 @@ export default class Document extends Component {
                                             Room {this.state.document.room}
                                         </small>
                                     }
+                                    <div>
+                                        <small>
+                                            {
+                                                moment(this.state.document.checkin).format("YYYY-MM-DD")
+                                                + " to "
+                                                + moment(this.state.document.checkout).format("YYYY-MM-DD")
+                                            }
+                                        </small>
+                                    </div>
                                 </div>
                             }
                             secondaryText={
@@ -280,7 +290,7 @@ export default class Document extends Component {
                                 <a href={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/document.jpg"}>
                                     <img
                                         src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/document.jpg"}
-                                        width="50%" alt="" />
+                                        width="50%" alt=""/>
                                 </a>
                             </div>
                             <Divider/>
