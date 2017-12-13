@@ -10,6 +10,7 @@ import Spinner from "react-spinkit";
 import AddDocument from "./AddDocument";
 import {ActionDone, AlertError} from "material-ui/svg-icons/index";
 import {green700, red700} from "material-ui/styles/colors";
+import capitalize from "titleize";
 
 const APP_ID = "passport-reader-server-188622.appspot.com";
 const STORAGE_ROOT_URL = "https://storage.googleapis.com";
@@ -81,7 +82,11 @@ export default class App extends Component {
                     this.isAuthenticated() &&
                     <div className="no-print">
                         <AppBar
-                            title={this.state.client.clientName}
+                            title={
+                                this.state.client.hotel ?
+                                    capitalize(this.state.client.hotel.replace("_", " ")) :
+                                    capitalize(this.state.client.hotelGroup.replace("_", " "))
+                            }
                             onLeftIconButtonTouchTap={() => this.setState({menuOpen: true})}
                             iconElementRight={
                                 (
@@ -90,11 +95,11 @@ export default class App extends Component {
                                 ) ||
                                 (
                                     this.state.actionDone &&
-                                    <ActionDone color={green700} />
+                                    <ActionDone color={green700}/>
                                 ) ||
                                 (
                                     this.state.alertError &&
-                                    <AlertError color={red700} />
+                                    <AlertError color={red700}/>
                                 ) ||
                                 (
                                     null
@@ -114,7 +119,7 @@ export default class App extends Component {
                                 Passports
                             </MenuItem>
                             {
-                                !this.state.client.mother &&
+                                this.state.client.hotel &&
                                 <MenuItem
                                     onTouchTap={() => this.goTo("/add-document")}
                                 >

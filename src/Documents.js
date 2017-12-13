@@ -7,6 +7,7 @@ import Avatar from "material-ui/Avatar";
 import ActionCreditCard from "material-ui/svg-icons/action/credit-card";
 import moment from "moment";
 import {RaisedButton, TextField} from "material-ui";
+import capitalize from "titleize";
 
 export default class Documents extends Component {
 
@@ -20,7 +21,7 @@ export default class Documents extends Component {
 
     fetchParamsThenDocuments(searchQuery) {
         let params = this.fetchQueryParams(searchQuery);
-        this.fetchPassports(params.query, params.offset);
+        this.fetchDocuments(params.query, params.offset);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -46,11 +47,15 @@ export default class Documents extends Component {
         };
     }
 
-    fetchPassports(query, offset) {
+    fetchDocuments(query, offset) {
         this.props.setWorkInProgress(true);
         this.setState({passports: undefined});
 
-        fetch("https://" + this.props.appId + "?clients=" + encodeURIComponent(this.props.client.client) + "&q=" + query + "&o=" + offset
+        fetch("https://"
+            + this.props.appId
+            + "?hotelGroup=" + this.props.client.hotelGroup
+            + "&hotel=" + (this.props.client.hotel ? this.props.client.hotel : "")
+            + "&q=" + query + "&o=" + offset
             , {
                 method: 'GET'
             })
@@ -72,8 +77,8 @@ export default class Documents extends Component {
             });
     }
 
-    removePassport(passportKey) {
-        this.props.setWorkInProgress();
+    removeDocument(passportKey) {
+        this.props.setWorkInProgress(true);
 
         fetch("https://" + this.props.appId + "/" + passportKey, {method: 'DELETE'})
             .then((response) => {
@@ -90,7 +95,7 @@ export default class Documents extends Component {
     leftAvatar(result) {
         return (result.fields.find(field => field.name === "documentType").atom === "P")
             ? <Avatar
-                src={this.props.storageRootUrl + "/" + this.props.appId + "/" + result.fields.find(field => field.name === "client").atom + "/" + result.id + "/head.jpg"}/>
+                src={this.props.storageRootUrl + "/" + this.props.appId + "/" + result.fields.find(field => field.name === "hotel").atom + "/" + result.id + "/head.jpg"}/>
             : <ActionCreditCard/>;
     }
 
@@ -130,8 +135,8 @@ export default class Documents extends Component {
                                                         <div>
                                                             <small>
                                                                 {
-                                                                    this.props.client.mother &&
-                                                                    result.fields.find(field => field.name === "client").atom
+                                                                    !this.props.client.hotel &&
+                                                                    capitalize(result.fields.find(field => field.name === "hotel").atom.replace("_", " "))
                                                                 }
                                                             </small>
                                                         </div>
@@ -176,10 +181,11 @@ export default class Documents extends Component {
                                                     this.props.history.push("/documents/" + result.id);
                                                 }}
                                                 rightIconButton={
+                                                    this.props.client.hotel &&
                                                     <IconButton
                                                         onTouchTap={(e) => {
                                                             e.preventDefault();
-                                                            this.removePassport(result.id);
+                                                            this.removeDocument(result.id);
                                                         }}
                                                     >
                                                         <ActionDeleteForever/>

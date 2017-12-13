@@ -176,10 +176,6 @@ export default class Document extends Component {
             });
     }
 
-    print() {
-        this.props.history.push("/print/" + this.props.match.params.passportKey);
-    }
-
     render() {
         if (!this.state.document) {
             return null;

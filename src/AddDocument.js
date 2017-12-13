@@ -14,10 +14,11 @@ export default class AddDocument extends Component {
 
     state = {
         sex: "M",
-        birthDate: "1980-01-01",
-        documentExpirityDate: "2020-01-01",
+        birthDate: "1970-01-01",
+        documentExpirityDate: "2025-01-01",
         documentType: "I",
-        client: this.props.client.client,
+        hotelGroup: this.props.client.hotelGroup,
+        hotel: this.props.client.hotel ? this.props.client.hotel : "",
     };
 
     isFormValid() {
@@ -39,7 +40,7 @@ export default class AddDocument extends Component {
             body: JSON.stringify(this.state),
         })
             .then(response => {
-                if(response.ok) {
+                if (response.ok) {
                     this.props.history.push("/");
                 } else {
                     console.error(response.statusText);
