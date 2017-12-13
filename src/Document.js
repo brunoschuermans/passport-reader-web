@@ -81,7 +81,7 @@ export default class Document extends Component {
     leftAvatar() {
         return (this.state.document.documentType === "P")
             ? <Avatar
-                src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.props.match.params.passportKey + "/head.jpg"}/>
+                src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.props.match.params.passportKey + "/head.jpg"}/>
             : <ActionCreditCard/>;
     }
 
