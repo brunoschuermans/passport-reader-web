@@ -113,7 +113,7 @@ export default class Document extends Component {
             image.src = dataUrl;
             image.onload = () => {
                 const data = resizeImage.resize(image, 600, 400, resizeImage.JPEG);
-                fetch("https://" + self.props.appId + "/images/" + self.state.document.client + "/" + self.props.match.params.passportKey, {
+                fetch("https://" + self.props.appId + "/images/" + self.state.document.hotel + "/" + self.props.match.params.passportKey, {
                     method: "POST",
                     headers: {"Content-Type": "application/octet-stream"},
                     body: data.substring(data.indexOf("base64,") + 7),
@@ -137,7 +137,7 @@ export default class Document extends Component {
 
         const formData = new FormData(document.getElementById("fileForm"));
 
-        fetch("https://" + this.props.appId + "/files/" + this.state.document.client + "/" + this.props.match.params.passportKey, {
+        fetch("https://" + this.props.appId + "/files/" + this.state.document.hotel + "/" + this.props.match.params.passportKey, {
             method: "POST",
             body: formData,
         }).then(response => {
@@ -283,9 +283,9 @@ export default class Document extends Component {
                                 }}
                             >
                                 <h3>Passport</h3>
-                                <a href={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/document.jpg"}>
+                                <a href={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.state.document.key + "/document.jpg"}>
                                     <img
-                                        src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/document.jpg"}
+                                        src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.state.document.key + "/document.jpg"}
                                         width="50%" alt=""/>
                                 </a>
                             </div>
@@ -309,8 +309,8 @@ export default class Document extends Component {
                                         <ListItem
                                             key={index}
                                             primaryText={<img width="50%" alt=""
-                                                              src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/" + file.fileName}/>}
-                                            onTouchTap={() => window.open(this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/" + file.fileName)}
+                                                              src={this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.state.document.key + "/" + file.fileName}/>}
+                                            onTouchTap={() => window.open(this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.state.document.key + "/" + file.fileName)}
                                             rightIconButton={
                                                 <IconButton
                                                     onTouchTap={(e) => {
@@ -333,7 +333,7 @@ export default class Document extends Component {
                         <EditorAttachFile/>
                         <form
                             id="fileForm"
-                            action={"https://" + this.props.appId + "/files/" + this.state.document.client + "/" + this.state.document.key}
+                            action={"https://" + this.props.appId + "/files/" + this.state.document.hotel + "/" + this.state.document.key}
                             method="post"
                             encType="multipart/form-data">
                             <input
@@ -355,7 +355,7 @@ export default class Document extends Component {
                                         <ListItem
                                             key={index}
                                             primaryText={file.fileName}
-                                            onTouchTap={() => window.open(this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.client + "/" + this.state.document.key + "/" + file.fileName)}
+                                            onTouchTap={() => window.open(this.props.storageRootUrl + "/" + this.props.appId + "/" + this.state.document.hotel + "/" + this.state.document.key + "/" + file.fileName)}
                                             rightIconButton={
                                                 <IconButton
                                                     onTouchTap={(e) => {
